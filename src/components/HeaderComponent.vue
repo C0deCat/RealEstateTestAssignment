@@ -19,11 +19,12 @@
   color: $themeRed;
   font-size: 32px;
   font-weight: 700;
-  line-height: 39px;
+  line-height: normal;
 }
 
 .header__user-name {
   color: $themeBlack;
   font-size: 16px;
+  line-height: normal;
 }
 </style>
