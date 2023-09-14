@@ -1,8 +1,23 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { type IState } from '@/store'
+import { ref } from 'vue'
+import { useStore } from 'vuex'
+
+const store = useStore<IState>()
+const searchString = ref('')
+
+const requestFilteredUsers = () => {
+  const preparedData = searchString.value
+    .split(',')
+    .map((value) => value.trim().toLowerCase())
+    .filter((value) => value.length > 0)
+  store.dispatch('searchUsers', preparedData)
+}
+</script>
 
 <template>
-  <form>
-    <input type="text" class="searchField__input" />
+  <form @submit.prevent="requestFilteredUsers">
+    <input type="text" class="searchField__input" v-model="searchString" />
   </form>
 </template>
 

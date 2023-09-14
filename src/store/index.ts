@@ -1,33 +1,35 @@
 import { createStore } from 'vuex'
 
+type TUser = {
+  id: number
+  name: string
+  email: string
+  phone?: string
+  aboutSelf?: string
+}
 export interface IState {
-  users: {
-    id: number
-    name: string
-    email: string
-  }[]
-  selectedUser: {
-    id: number
-    name: string
-    email: string
-    phone: string
-    aboutSelf: string
-  } | null
+  users: TUser[]
+  filteredUsers: TUser[]
+  selectedUser: TUser | null
 }
 
-export const store = createStore({
+export default createStore({
   state(): IState {
     return {
       users: [],
+      filteredUsers: [],
       selectedUser: null
     }
   },
 
   mutations: {
-    setUsers(state, users) {
+    setUsers(state, users: TUser[]) {
       state.users = users
     },
-    setSelectedUser(state, user) {
+    setFilteredUsers(state, users: TUser[]) {
+      state.filteredUsers = users
+    },
+    setSelectedUser(state, user: TUser) {
       state.selectedUser = user
     }
   },
@@ -51,8 +53,17 @@ export const store = createStore({
             name: user.name,
             email: user.email
           }))
+          console.log(shortenedUsers)
+
           context.commit('setUsers', shortenedUsers)
         })
+    },
+    searchUsers({ commit, state }, names: string[]) {
+      const filteredUsers = state.users.filter((value) =>
+        names.some((name) => value.name.toLowerCase().includes(name))
+      )
+
+      commit('setFilteredUsers', filteredUsers)
     }
   }
 })

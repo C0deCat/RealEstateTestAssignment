@@ -28,6 +28,7 @@ const props = defineProps({
   overflow: hidden;
   box-sizing: border-box;
   height: 70px;
+  margin: 18px 0 18px 0;
   &:hover {
     background-color: #e0e0e0;
     border: 1px solid #e0e0e0;
